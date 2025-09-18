@@ -6,6 +6,7 @@
 
 class UIelement {
 public:
+    virtual ~UIelement() = default;
     //Getters
     //Identification
     std::string getId()const {return id;};
@@ -22,6 +23,8 @@ public:
     int getZIndex()const{return zIndex;};
     bool isVisible()const{return visible;};
     sf::Color getBackgroundColor()const{return backgroundColor;};
+    sf::Color getBorderColor()const{return borderColor;};
+    uint32_t getBorderThickness()const{return borderThickness;};
     //Text attributes
     sf::Font getFont()const{return font;};
     sf::Color getFontColor()const{return fontColor;};
@@ -41,6 +44,8 @@ protected:
     int zIndex = 0;
     bool visible{true};
     sf::Color backgroundColor = sf::Color::Transparent;
+    sf::Color borderColor = sf::Color::Transparent;
+    uint32_t borderThickness{1};
 
     //Text attributes
     const std::string defaultFontPath = "resources/fonts/Roboto-Regular.ttf";
@@ -53,7 +58,53 @@ protected:
     }(defaultFontPath);
     sf::Color fontColor = sf::Color::White;
 
-    //Other attributes
+    //Rendering
+    virtual void render() = 0;
     std::string content;
     std::string placeholder = "PLACEHOLDER";
+
+    //Event logic
+    std::string allowedEventTypes[41]={
+        "keyPressed",
+        "keyDown",
+        "keyReleased",
+        "mouseClick",
+        "mouseDoubleClick",
+        "mouseDown",
+        "mouseUp",
+        "scrollWheelMove",
+        "mouseMove",
+        "mouseEnter",
+        "mouseLeave",
+        "onFocus",
+        "onLostFocus",
+        "onSelect",
+        "onDeselect",
+        "onEnable",
+        "onDisable",
+        "onLoad",
+        "onRender",
+        "onRemove",
+        "onNewStyleChange",
+        "onNewPosition",
+        "onNewSize",
+        "onNewRotation",
+        "onNewZindex",
+        "onNewBackgroundColor",
+        "onNewBorderColor",
+        "onNewBorderThickness",
+        "onNewFontColor",
+        "onNewFont",
+        "onFontLoad",
+        "onContentChange",
+        "onInput",
+        "onPlaceholderChange",
+        "onVisibilityChange",
+        "onHierarchyChange",
+        "onNewParent",
+        "onNewChild",
+        "onRemoveChild",
+        "onNewId",
+        "onNewClassName",
+    };
 };
